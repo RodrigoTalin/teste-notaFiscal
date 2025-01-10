@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nota Fiscal Emitida</title>
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Nota Fiscal de Serviço</h1>
+        <div id="notaFiscalDetalhes" class="output"></div>
+        <button onclick="window.print()">Imprimir Nota Fiscal</button>
+    </div>
+
+    <script>
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const valorVenda = urlParams.get('valorVenda');
+        const itens = urlParams.get('itens');
+        const irpf = urlParams.get('irpf');
+        const pis = urlParams.get('pis');
+        const cofins = urlParams.get('cofins');
+        const inss = urlParams.get('inss');
+        const issqn = urlParams.get('issqn');
+        const impostosCalculados = {
+            irpf: urlParams.get('impostoIrpf'),
+            pis: urlParams.get('impostoPis'),
+            cofins: urlParams.get('impostoCofins'),
+            inss: urlParams.get('impostoInss'),
+            issqn: urlParams.get('impostoIssqn'),
+            total: urlParams.get('totalImpostos'),
+            liquido: urlParams.get('valorLiquido')
+        };
+
+        const notaFiscalDiv = document.getElementById('notaFiscalDetalhes');
+        notaFiscalDiv.innerHTML = `
+            <p><strong>Itens Vendidos:</strong> ${decodeURIComponent(itens)}</p>
+            <p><strong>Valor Bruto:</strong> R$ ${parseFloat(valorVenda).toFixed(2)}</p>
+            <p><strong>IRPF:</strong> R$ ${parseFloat(impostosCalculados.irpf).toFixed(2)}</p>
+            <p><strong>PIS:</strong> R$ ${parseFloat(impostosCalculados.pis).toFixed(2)}</p>
+            <p><strong>COFINS:</strong> R$ ${parseFloat(impostosCalculados.cofins).toFixed(2)}</p>
+            <p><strong>INSS:</strong> R$ ${parseFloat(impostosCalculados.inss).toFixed(2)}</p>
+            <p><strong>ISSQN:</strong> R$ ${parseFloat(impostosCalculados.issqn).toFixed(2)}</p>
+            <p><strong>Total de Impostos:</strong> R$ ${parseFloat(impostosCalculados.total).toFixed(2)}</p>
+            <p><strong>Valor Líquido:</strong> R$ ${parseFloat(impostosCalculados.liquido).toFixed(2)}</p>
+        `;
+    </script>
+</body>
+</html>
